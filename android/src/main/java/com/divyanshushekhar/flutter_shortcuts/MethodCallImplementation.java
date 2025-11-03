@@ -9,6 +9,11 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.RectF;
 import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.util.Log;
@@ -421,7 +426,7 @@ public class MethodCallImplementation implements MethodChannel.MethodCallHandler
 
     private void setIconFromBase64StringCompat(ShortcutInfoCompat.Builder shortcutBuilder, String icon) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            shortcutBuilder.setIcon(IconCompat.createFromIcon(context, getIconFromMemoryAsset(context, icon)));
+            shortcutBuilder.setIcon(getIconFromMemoryAsset(context, icon));
         }
     }
 
@@ -462,7 +467,7 @@ public class MethodCallImplementation implements MethodChannel.MethodCallHandler
 
     private void setIconFromBase64StringCompat(Person.Builder personBuilder, String icon) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            personBuilder.setIcon(IconCompat.createFromIcon(context, getIconFromMemoryAsset(context, icon)));
+            personBuilder.setIcon(getIconFromMemoryAsset(context, icon));
         }
     }
 
@@ -488,16 +493,35 @@ public class MethodCallImplementation implements MethodChannel.MethodCallHandler
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private Icon getIconFromMemoryAsset(Context context, String base64Jpeg) {
+    private IconCompat getIconFromMemoryAsset(Context ignoredContext, String base64Jpeg) {
         try {
             byte[] bytes = Base64.getDecoder().decode(base64Jpeg);
             Bitmap image = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
-            return Icon.createWithAdaptiveBitmap(image);
+            return IconCompat.createWithBitmap(getRoundedCornerBitmap(image, image.getWidth() * 0.27f));
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float roundPx) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final Paint paint = new Paint();
+        final RectF rectF = new RectF(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0); // Clear the canvas with a transparent color
+        paint.setColor(0xFF424242); // Arbitrary color, will be replaced by the bitmap
+
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, 0, 0, paint);
+
+        return output;
     }
 
     private int loadResourceId(Context context, String icon) {
