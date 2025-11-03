@@ -30,9 +30,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter Shortcuts Plugin'),
-        ),
+        appBar: AppBar(title: const Text('Flutter Shortcuts Plugin')),
         body: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.all(10),
@@ -52,14 +50,15 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
                 Text(
-                    "Flutter Shortcuts Max Limit -> ${maxLimit == null ? '' : maxLimit}"),
+                  "Flutter Shortcuts Max Limit -> ${maxLimit == null ? '' : maxLimit}",
+                ),
                 Row(
                   children: [
                     ElevatedButton(
                       child: Text("Get Max Shortcut Limit"),
                       onPressed: () async {
-                        int? result =
-                            await flutterShortcuts.getMaxShortcutLimit();
+                        int? result = await flutterShortcuts
+                            .getMaxShortcutLimit();
                         setState(() {
                           maxLimit = result;
                         });
@@ -75,30 +74,33 @@ class _MyAppState extends State<MyApp> {
                     ElevatedButton(
                       child: Text("Set Shortcuts"),
                       onPressed: () async {
-                        await flutterShortcuts.setShortcutItems(
-                          shortcutItems: <ShortcutItem>[
-                            const ShortcutItem(
-                              id: "1",
-                              action: 'Home page action',
-                              shortLabel: 'Home Page',
-                              icon: 'assets/icons/home.png',
-                            ),
-                            const ShortcutItem(
-                              id: "2",
-                              action: 'Bookmark page action',
-                              shortLabel: 'Bookmark Page',
-                              // icon: 'assets/icons/bookmark.png',
-                              icon: "ic_launcher",
-                              shortcutIconAsset: ShortcutIconAsset.androidAsset,
-                            ),
-                          ],
-                        ).then((value) {
-                          setState(() {
-                            if (action == 'No Action') {
-                              action = 'Flutter Shortcuts Ready';
-                            }
-                          });
-                        });
+                        await flutterShortcuts
+                            .setShortcutItems(
+                              shortcutItems: <ShortcutItem>[
+                                const ShortcutItem(
+                                  id: "1",
+                                  action: 'Home page action',
+                                  shortLabel: 'Home Page',
+                                  icon: 'assets/icons/home.png',
+                                ),
+                                const ShortcutItem(
+                                  id: "2",
+                                  action: 'Bookmark page action',
+                                  shortLabel: 'Bookmark Page',
+                                  // icon: 'assets/icons/bookmark.png',
+                                  icon: "ic_launcher",
+                                  shortcutIconAsset:
+                                      ShortcutIconAsset.androidAsset,
+                                ),
+                              ],
+                            )
+                            .then((value) {
+                              setState(() {
+                                if (action == 'No Action') {
+                                  action = 'Flutter Shortcuts Ready';
+                                }
+                              });
+                            });
                       },
                     ),
                     ElevatedButton(
@@ -203,8 +205,8 @@ class _MyAppState extends State<MyApp> {
                     ElevatedButton(
                       child: Text("icon Properties"),
                       onPressed: () async {
-                        Map<String, int> result =
-                            await flutterShortcuts.getIconProperties();
+                        Map<String, int> result = await flutterShortcuts
+                            .getIconProperties();
                         print(
                           "maxHeight: ${result["maxHeight"]}, maxWidth: ${result["maxWidth"]}",
                         );

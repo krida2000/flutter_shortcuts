@@ -39,8 +39,9 @@ class FlutterShortcuts {
   }
 
   /// [setShortcutItems] will set all the shortcut items.
-  Future<void> setShortcutItems(
-      {required List<ShortcutItem> shortcutItems}) async {
+  Future<void> setShortcutItems({
+    required List<ShortcutItem> shortcutItems,
+  }) async {
     return FlutterShortcutsPlatform.instance.setShortcutItems(shortcutItems);
   }
 
@@ -58,15 +59,17 @@ class FlutterShortcuts {
 
   /// [pushShortcutItems] updates dynamic or pinned shortcuts with same IDs
   /// and pushes new shortcuts with different IDs.
-  Future<void> pushShortcutItems(
-      {required List<ShortcutItem> shortcutList}) async {
+  Future<void> pushShortcutItems({
+    required List<ShortcutItem> shortcutList,
+  }) async {
     return FlutterShortcutsPlatform.instance.pushShortcutItems(shortcutList);
   }
 
   /// [updateShortcutItems] updates shortcut items.
   /// If the IDs of the shortcuts are not same, no changes will be reflected.
-  Future<void> updateShortcutItems(
-      {required List<ShortcutItem> shortcutList}) async {
+  Future<void> updateShortcutItems({
+    required List<ShortcutItem> shortcutList,
+  }) async {
     return FlutterShortcutsPlatform.instance.updateShortcutItems(shortcutList);
   }
 
@@ -78,8 +81,10 @@ class FlutterShortcuts {
 
   /// [changeShortcutItemIcon] will change the icon of the shortcut based on id.
   /// If the ID of the shortcut is not same, no changes will be reflected.
-  Future<void> changeShortcutItemIcon(
-      {required String id, required String icon}) async {
+  Future<void> changeShortcutItemIcon({
+    required String id,
+    required String icon,
+  }) async {
     return FlutterShortcutsPlatform.instance.changeShortcutItemIcon(id, icon);
   }
 }
