@@ -22,7 +22,9 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 31
+    namespace "com.divyanshushekhar.flutter_shortcuts"
+
+    compileSdkVersion 36
 
     defaultConfig {
         minSdkVersion 16
@@ -30,6 +32,6 @@ android {
 }
 
 dependencies {
-    implementation "androidx.core:core:1.8.0-alpha02"
-    implementation 'androidx.core:core-google-shortcuts:1.1.0-alpha01'
+    implementation "androidx.core:core:1.17.0"
+    implementation 'androidx.core:core-google-shortcuts:1.1.0'
 }

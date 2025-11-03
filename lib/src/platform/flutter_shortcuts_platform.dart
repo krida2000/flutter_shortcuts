@@ -70,6 +70,7 @@ abstract class FlutterShortcutsPlatform extends PlatformInterface {
 
   Future<void> changeShortcutItemIcon(String id, String icon) async {
     throw UnimplementedError(
-        "changeShortcutItemIcon() has not been implemented.");
+      "changeShortcutItemIcon() has not been implemented.",
+    );
   }
 }

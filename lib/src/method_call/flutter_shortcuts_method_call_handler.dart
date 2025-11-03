@@ -14,8 +14,9 @@ import 'package:flutter_shortcuts/src/helper/helper.dart';
 import 'package:flutter/foundation.dart';
 
 class FlutterShortcutsMethodCallHandler extends FlutterShortcutsPlatform {
-  final MethodChannel _channel =
-      MethodChannel('com.divyanshushekhar.flutter_shortcuts');
+  final MethodChannel _channel = MethodChannel(
+    'com.divyanshushekhar.flutter_shortcuts',
+  );
 
   MethodChannel get channel => _channel;
 
@@ -33,8 +34,9 @@ class FlutterShortcutsMethodCallHandler extends FlutterShortcutsPlatform {
       assert(call.method == 'launch');
       actionHandler(call.arguments);
     });
-    final String? action =
-        await channel.invokeMethod<String>('getLaunchAction');
+    final String? action = await channel.invokeMethod<String>(
+      'getLaunchAction',
+    );
     if (action != null) {
       actionHandler(action);
     }
@@ -48,13 +50,15 @@ class FlutterShortcutsMethodCallHandler extends FlutterShortcutsPlatform {
   @override
   Future<Map<String, int>> getIconProperties() async {
     return Map.castFrom<dynamic, dynamic, String, int>(
-        await channel.invokeMethod('getIconProperties'));
+      await channel.invokeMethod('getIconProperties'),
+    );
   }
 
   @override
   Future<void> setShortcutItems(List<ShortcutItem> items) async {
-    final List<Map<String, dynamic>> itemsList =
-        items.map((item) => item.serialize()).toList();
+    final List<Map<String, dynamic>> itemsList = items
+        .map((item) => item.serialize())
+        .toList();
     await channel.invokeMethod<void>('setShortcutItems', itemsList);
   }
 
@@ -71,15 +75,17 @@ class FlutterShortcutsMethodCallHandler extends FlutterShortcutsPlatform {
 
   @override
   Future<void> pushShortcutItems(List<ShortcutItem> items) async {
-    final List<Map<String, dynamic>> itemsList =
-        items.map((item) => item.serialize()).toList();
+    final List<Map<String, dynamic>> itemsList = items
+        .map((item) => item.serialize())
+        .toList();
     await channel.invokeMethod<void>('pushShortcutItems', itemsList);
   }
 
   @override
   Future<void> updateShortcutItems(List<ShortcutItem> items) async {
-    final List<Map<String, dynamic>> itemsList =
-        items.map((item) => item.serialize()).toList();
+    final List<Map<String, dynamic>> itemsList = items
+        .map((item) => item.serialize())
+        .toList();
     await channel.invokeMethod<void>('updateShortcutItems', itemsList);
   }
 
